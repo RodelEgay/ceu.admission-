@@ -11,7 +11,7 @@
 
   <!-- Pink top bar (mobile only) -->
   <div class="topbar">
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="hamburger" onclick="toggleMenu()" aria-label="Open menu">☰</div>
   </div>
 
   <!-- Header -->
@@ -20,10 +20,19 @@
       <img src="images/ceu-logo.png" alt="CEU Logo" class="logo">
     </div>
 
-    <nav id="navMenu">
-      <a href="#">PAYMENT CHANNELS</a>
-      <a href="#">CONTACT US</a>
-      <a href="#">LOG IN</a>
+    <nav id="navMenu" role="navigation">
+      <!-- Always-visible links (desktop + mobile inline) -->
+      <a class="main-link" href="#">PAYMENT CHANNELS</a>
+      <a class="main-link" href="#">CONTACT US</a>
+      <a class="main-link" href="#">REGISTER / LOG IN</a>
+
+      <!-- Hamburger-only links (wrapped so they can dropdown under the row) -->
+      <div class="menu-extra-wrap" aria-hidden="true">
+        <a class="menu-extra" href="#">ADMISSION HOME</a>
+        <a class="menu-extra" href="#">ABOUT CEU ADMISSION</a>
+        <a class="menu-extra" href="#">PAYMENT CHANNELS</a>
+        <a class="menu-extra" href="#">CONTACT US</a>
+      </div>
     </nav>
   </header>
 
@@ -79,7 +88,14 @@
   <!-- Script -->
   <script>
     function toggleMenu() {
-      document.getElementById("navMenu").classList.toggle("show");
+      const nav = document.getElementById("navMenu");
+      nav.classList.toggle("show");
+      // for accessibility: toggle aria-hidden on extra wrap
+      const wrap = nav.querySelector('.menu-extra-wrap');
+      if (wrap) {
+        const isShown = nav.classList.contains('show');
+        wrap.setAttribute('aria-hidden', !isShown);
+      }
     }
   </script>
 
