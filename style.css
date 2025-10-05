@@ -16,7 +16,7 @@ body {
 .topbar {
   background-color: #f06292;
   height: 35px;
-  display: none; /* hidden by default on desktop */
+  display: none; /* shown in mobile via media query */
 }
 
 /* Header */
@@ -31,15 +31,16 @@ header {
 
 /* Logo */
 .logo {
-  height: 70px;         /* adjust size */
-  object-fit: contain;  /* prevent distortion */
-  margin-left: 20px;    /* push logo a bit to the right */
+  height: 70px;
+  object-fit: contain;
+  margin-left: 20px;
 }
 
 /* Navigation links */
 nav {
   display: flex;
   gap: 25px;
+  align-items: center;
 }
 
 nav a {
@@ -54,7 +55,12 @@ nav a.active {
   padding-bottom: 3px;
 }
 
-/* Hamburger (mobile) */
+/* Menu extra (hamburger items) wrapper */
+.menu-extra-wrap {
+  display: none; /* hidden by default (desktop) */
+}
+
+/* Hamburger (in pink bar on mobile) */
 .hamburger {
   display: none;
   font-size: 28px;
@@ -187,38 +193,87 @@ footer {
 }
 
 /* =====================
-   RESPONSIVE STYLES
+   RESPONSIVE / MOBILE
    ===================== */
 @media (max-width: 768px) {
-  /* Show topbar only in mobile */
+
+  /* show pink topbar with hamburger */
   .topbar {
-    display: block;
-  }
-
-  nav {
-    display: none;
-    flex-direction: column;
-    background-color: #21125e;
-    position: absolute;
-    top: 70px;
-    right: 0;
-    width: 200px;
-    padding: 15px;
-  }
-
-  nav.show {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #f06292;
+    height: 40px;
+    padding: 0 15px;
+  }
+
+  .topbar .hamburger {
+    display: block;
+    font-size: 28px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  /* header becomes compact; logo centered above the nav row */
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 6px;
+  }
+
+  .logo {
+    height: 60px;
+    margin-left: 0;
+  }
+
+  /* Keep the main navigation LINKS inline (row) */
+  nav {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* allows dropdown wrap below when opened */
+    width: 100%;
+    background: #21125e;
+    padding: 8px 10px;
   }
 
   nav a {
-    margin: 10px 0;
-    font-size: 15px;
+    display: inline-block; /* keep them side-by-side */
+    font-size: 14px;
+    padding: 6px 8px;
+    white-space: nowrap;
   }
 
-  .hamburger {
+  /* menu-extra-wrap hidden by default; shown only when nav has .show */
+  .menu-extra-wrap {
+    display: none;
+    width: 100%;
+  }
+
+  .menu-extra {
     display: block;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: #fff;
+    text-decoration: none;
   }
 
+  /* When hamburger toggles nav.show, reveal the extra menu (full-width block under the row) */
+  nav.show .menu-extra-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 6px;
+    background: #21125e;
+  }
+
+  /* footer adjustments */
   .footer-top {
     flex-direction: column;
     text-align: center;
